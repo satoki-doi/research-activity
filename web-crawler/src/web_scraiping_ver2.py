@@ -14,8 +14,8 @@ from functools import wraps
 
 dir = "../output_data"
 OPENER = urllib2.build_opener()
-OPENER.addheaders = [("User-Agent", "Mozilla/4.0")]
-base = 'https://www.google.co.jp/search?site=imghp&tbm=isch&source=hp&num=20&q='
+OPENER.addheaders = [("User-Agent", "Mozilla/5.0")]
+base = 'https://www.google.co.jp/search?site=imghp&tbm=isch&source=hp&num=30&q='
 
 
 def SEARCH_WORD_GetHTML(que):
@@ -39,7 +39,7 @@ def DL_img(img_url, word):
         img.close()
         localfile.close()
     except:
-        print ""
+        print "Not Download %s" % img_url
 
 def Get_imgURL(soup, word):
     Namelist = soup.find_all('img')
@@ -47,6 +47,8 @@ def Get_imgURL(soup, word):
         try:
             img_url = link.get('src')
             DL_img(img_url, word)
+            stop_time = poisson(lam=2) + 1
+            time.sleep(stop_time)
         except Exception as e:
             print e
 
