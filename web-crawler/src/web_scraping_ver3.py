@@ -14,7 +14,7 @@ from functools import wraps
 
 dir = "../output_data"
 OPENER = urllib2.build_opener()
-OPENER.addheaders = [("User-Agent", "Mozilla/5.0")]
+OPENER.addheaders = [("User-Agent", "Mozilla/4.0")]
 base = 'https://www.google.co.jp/search?site=imghp&tbm=isch&source=hp&num=30&q='
 
 
@@ -53,8 +53,8 @@ def Get_imgURL(soup, word):
         try:
             img_url = link.get('src')
             DL_img(img_url, word)
-            stop_time = poisson(lam=1) + 1
-            time.sleep(stop_time)
+            # stop_time = poisson(lam=1) + 1
+            # time.sleep(stop_time)
         except Exception as e:
             print e
 
@@ -89,7 +89,7 @@ def main(item_list):
             print "dir already exist"
         soup = SEARCH_WORD_GetHTML(item)
         Get_imgURL(soup, item)
-        stop_time = poisson(lam=5) + 1
+        stop_time = poisson(lam=3) + 1
         time.sleep(stop_time)
         count += 1    
 
