@@ -130,6 +130,9 @@ for iter in range(-burnin, num_samples):
 
     times = [ time.time()]
 
+    tssb.resample_node_hyper()
+    times.append(time.time())
+
     tssb.resample_node_params()
     times.append(time.time())
 
@@ -166,7 +169,7 @@ for iter in range(-burnin, num_samples):
         print codename, "iter is %d" % iter
         print "nodes length is %s" % str(len(nodes))
         print "cd_llh_trace is %d" % cd_llh_traces[iter]
-        print "drift mean = %d" % mean(root.params)
+        print "drift mean = %d" % mean(root._drift)
         print "dp_alpha={0}: dp_gamma={1}: alpha_decay:{2}".format(tssb.dp_alpha, tssb.dp_gamma, tssb.alpha_decay) 
         # print "intervals", " ".join(map(lambda x: "%0.2f" % x, intervals.tolist()))
         print float(root.hmc_accepts) / (root.hmc_accepts + root.hmc_rejects)

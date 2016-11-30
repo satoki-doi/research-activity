@@ -54,7 +54,7 @@ class Node(object):
 
     def resample_params(self):
         pass
-    
+
     def add_child(self, child):
         self._children.add(child)
 

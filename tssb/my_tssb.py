@@ -90,6 +90,10 @@ class TSSB(object):
                 root['node'].resample_params()
             descend(self.root)
 
+    def resample_node_hyper(self, iters=1):
+        for iter in range(iters):
+            self.root['node'].resample_hypers()
+
 # 第１の動作
     def resample_assignments(self):
 
