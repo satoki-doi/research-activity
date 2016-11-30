@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+our $FILE = '/usr/share/dict/words';
+open(DICT, $FILE) or die $!;
+my @words = <DICT>;
+close(DICT);
+my $word = '';
+while ($word !~ /^[a-z]+$/) {
+  my $index = int rand @words;
+  $word = $words[$index];
+}
+print $word;
