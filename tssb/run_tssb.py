@@ -104,7 +104,7 @@ print ("elapsed_time:{0}".format(elapsed_time)) + "[sec]"
 
 # mcmc config
 burnin = 10
-num_samples = 40
+num_samples = 10000
 checkpoint = 1000
 
 dp_alpha_traces = zeros((num_samples, 1))
@@ -122,7 +122,7 @@ Starting MCMC run...
 
 start_time = time.time()
 
-for iter in range(-burnin, num_samples):
+for iter in xrange(-burnin, num_samples):
     elapsed_time = time.time() - start_time
     print "----------------------------"
     print ("elapsed_time:{0}".format(elapsed_time)) + "[sec]"
@@ -167,14 +167,14 @@ for iter in range(-burnin, num_samples):
         (weights, nodes) = tssb.get_mixture()
         # check value
         print codename, "iter is %d" % iter
-        print "nodes length is %s" % str(len(nodes))
-        print "cd_llh_trace is %d" % cd_llh_traces[iter]
-        print "drift mean = %d" % mean(root._drift)
+        # print "nodes length is %s" % str(len(nodes))
+        # print "cd_llh_trace is %f" % cd_llh_traces[iter]
+        # print "drift mean = %f" % mean(root._drift)
         print "dp_alpha={0}: dp_gamma={1}: alpha_decay:{2}".format(tssb.dp_alpha, tssb.dp_gamma, tssb.alpha_decay) 
         # print "intervals", " ".join(map(lambda x: "%0.2f" % x, intervals.tolist()))
-        print float(root.hmc_accepts) / (root.hmc_accepts + root.hmc_rejects)
-        print "hmc accept = %d" % root.hmc_accepts
-        print "hmc reject = %d" % root.hmc_rejects
+        # print float(root.hmc_accepts) / (root.hmc_accepts + root.hmc_rejects)
+        # print "hmc accept = %d" % root.hmc_accepts
+        # print "hmc reject = %d" % root.hmc_rejects
 
         # intervals = zeros((7))
         if iter > 0 and argmax(cd_llh_traces[:iter + 1]) == iter:

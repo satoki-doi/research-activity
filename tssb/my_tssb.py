@@ -11,7 +11,7 @@ from util         import *
 class TSSB(object):
 
     min_dp_alpha    = 1.0
-    max_dp_alpha    = 50.0
+    max_dp_alpha    = 100.0
     min_dp_gamma    = 1.0
     max_dp_gamma    = 10.0
     min_alpha_decay = 0.05
@@ -113,7 +113,7 @@ class TSSB(object):
         epsilon = finfo(float64).eps
         lengths = []
 
-        for n in range(self.num_data):
+        for n in xrange(self.num_data):
 
             # Get an initial uniform variate.
             ancestors = self.assignments[n].get_ancestors()
@@ -204,7 +204,7 @@ class TSSB(object):
            
             new_order   = []
             represented = set(filter(lambda i: root['children'][i]['node'].has_data(),
-                                     range(len(root['children']))))
+                                     xrange(len(root['children']))))
             all_weights = diff(hstack([0.0, sticks_to_edges(root['sticks'])]))
             while True:
                 if not represented:
@@ -212,7 +212,7 @@ class TSSB(object):
 
                 u = rand()
                 while True:
-                    sub_indices = filter(lambda i: i not in new_order, range(root['sticks'].shape[0]))
+                    sub_indices = filter(lambda i: i not in new_order, xrange(root['sticks'].shape[0]))
                     sub_weights = hstack([all_weights[sub_indices], 1.0 - sum(all_weights)])
                     sub_weights = sub_weights / sum(sub_weights)
                     index       = sum(u > cumsum(sub_weights))
@@ -236,7 +236,7 @@ class TSSB(object):
                 new_children.append(child)
                 descend(child, depth + 1)
 
-            for k in filter(lambda k: k not in new_order, range(root['sticks'].shape[0])):
+            for k in filter(lambda k: k not in new_order, xrange(root['sticks'].shape[0])):
                 root['children'][k]['node'].kill()
                 del root['children'][k]['node']
 
@@ -321,7 +321,7 @@ class TSSB(object):
     def draw_data(self, num_data=1, **args):
         self.data        = []
         self.assignments = []
-        for n in range(num_data):
+        for n in xrange(num_data):
             u    = rand()
             (node, path) = self.find_node(u)
             self.data.append(node.sample(args))
@@ -332,7 +332,7 @@ class TSSB(object):
         return self.data
 
     def resample_data(self, **args):
-        for n in range(self.num_data):
+        for n in xrange(self.num_data):
             u    = rand()
             (node, path) = self.find_node(u)
             self.assignments[n].remove_datum(n)
@@ -448,7 +448,7 @@ class TSSB(object):
         # self.root = root
 
     def add_pre_data(self, target, category_index):
-        for n in range(0, len(self.data)):
+        for n in xrange(0, len(self.data)):
             category_id = target[n]
             indecies = []
             tmp_df = category_index[category_index['category_id'] == category_id]
